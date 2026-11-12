@@ -1,0 +1,24 @@
+{
+  "phued": {
+    "id": "phued",
+    "originalName": "freecode-cee770e0-a882-4480-af1a-f0c3128900ed.zip",
+    "storedName": "phued.zip",
+    "size": 33037,
+    "sizeText": "32 KB",
+    "mimeType": "application/x-zip-compressed",
+    "preview": "none",
+    "createdAt": "2026-11-12T20:01:15.274Z",
+    "downloads": 1
+  },
+  "m5666": {
+    "id": "m5666",
+    "originalName": "2.mp4",
+    "storedName": "m5666.mp4",
+    "size": 60712338,
+    "sizeText": "58 MB",
+    "mimeType": "video/mp4",
+    "preview": "video",
+    "createdAt": "2026-11-12T20:01:28.095Z",
+    "downloads": 0
+  }
+}

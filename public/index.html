@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dosya Paylaş — Hızlı ve Ücretsiz Dosya Gönderimi</title>
+  <meta name="description" content="Dosyanı sürükle, anında kısa bağlantı al. Kayıt yok, reklam yok. Maksimum 100MB." />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+</head>
+<body class="page-home">
+  <div class="shell">
+    <!-- Marka -->
+    <header class="brand">
+      <a class="brand__link" href="/">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="m6 10 6-6 6 6"/><path d="M4 20h16"/></svg>
+        </span>
+        <span class="brand__name">Dosya Paylaş</span>
+      </a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 class="hero__title">Dosyanı paylaş,<br /><span class="accent">bağlantını al.</span></h1>
+        <p class="hero__sub">Kayıt yok, bekleme yok. Sürükle, bırak, kısa bağlantını kopyala.</p>
+      </section>
+
+      <!-- Yükleme alanı -->
+      <div class="card">
+        <div class="dropzone" id="dropzone" role="button" tabindex="0"
+             aria-label="Dosya yüklemek için tıklayın veya dosyayı buraya sürükleyin">
+          <input type="file" id="fileInput" class="visually-hidden" />
+          <div class="dropzone__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="m7 9 5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </div>
+          <p class="dropzone__title">Dosyayı buraya sürükleyin</p>
+          <p class="dropzone__hint">
+            veya <span class="dropzone__browse">bilgisayarınızdan seçin</span>
+          </p>
+          <p class="dropzone__meta">Tek dosya · Maksimum 100MB</p>
+        </div>
+
+        <p class="paste-hint">
+          <kbd class="kbd" id="pasteKbd">Ctrl</kbd><span class="kbd-plus">+</span><kbd class="kbd">V</kbd>
+          <span>ile ekran görüntüsü veya dosya yapıştırabilirsiniz</span>
+        </p>
+
+        <!-- Yükleme durumu -->
+        <div class="upload-panel" id="uploadPanel" hidden>
+          <div class="upload-top">
+            <div class="upload-file">
+              <span class="upload-file__icon" id="uploadFileIcon" aria-hidden="true">📦</span>
+              <div class="upload-file__text">
+                <p class="upload-file__name" id="uploadFileName">dosya</p>
+                <p class="upload-file__size" id="uploadFileSize">0 B</p>
+              </div>
+            </div>
+            <button class="icon-btn" id="cancelBtn" type="button" aria-label="Yüklemeyi iptal et" title="İptal et">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+          </div>
+
+          <div class="progress" id="progressWrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Yükleme ilerlemesi">
+            <div class="progress__bar" id="progressBar"></div>
+          </div>
+
+          <div class="upload-stats">
+            <span class="upload-pct" id="progressPct">%0</span>
+            <span class="upload-detail" id="uploadDetail">Yükleniyor…</span>
+          </div>
+        </div>
+
+        <!-- Başarı ekranı -->
+        <div class="success-panel" id="successPanel" hidden>
+          <div class="success-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>
+          </div>
+          <p class="success-title">Dosya yüklendi!</p>
+          <p class="success-sub" id="successSub">Kısa bağlantınız hazır.</p>
+
+          <div class="copy-group">
+            <label class="field-label" for="shortUrl">Kısa bağlantı</label>
+            <div class="copy-row">
+              <input class="input copy-input" id="shortUrl" type="text" readonly aria-label="Kısa bağlantı" />
+              <button class="btn btn--primary" id="copyBtn" type="button">
+                Linki Kopyala
+              </button>
+            </div>
+          </div>
+
+          <div class="success-actions">
+            <a class="btn btn--ghost btn--block" id="openLink" href="#" target="_blank" rel="noopener">
+              Dosya sayfasını aç
+            </a>
+            <button class="btn btn--ghost btn--block" id="resetBtn" type="button">
+              Yeni Dosya Yükle
+            </button>
+          </div>
+        </div>
+
+        <!-- Hata ekranı -->
+        <div class="error-panel" id="errorPanel" hidden>
+          <div class="error-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <p class="error-title" id="errorText">Bir şeyler ters gitti.</p>
+          <button class="btn btn--ghost" id="errorResetBtn" type="button">Tekrar Dene</button>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li>
+          <span class="features__icon" aria-hidden="true">⚡</span>
+          <div><strong>Anında yükleme</strong><span>Seçtiğin an başlar, ekstra buton yok.</span></div>
+        </li>
+        <li>
+          <span class="features__icon" aria-hidden="true">🔗</span>
+          <div><strong>Kısa bağlantı</strong><span>Beş karakterlik sade adresler.</span></div>
+        </li>
+        <li>
+          <span class="features__icon" aria-hidden="true">🔒</span>
+          <div><strong>Gizli tutulur</strong><span>Bağlantıyı yalnızca sen paylaşırsın.</span></div>
+        </li>
+      </ul>
+    </main>
+
+    <footer class="foot">
+      <p>Dosya Paylaş — hızlı, ücretsiz, kayıt gerektirmez. Maksimum 100MB.</p>
+    </footer>
+  </div>
+
+  <!-- Bildirimler -->
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="false"></div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
